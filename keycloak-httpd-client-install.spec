@@ -15,7 +15,7 @@
 
 Name:           %{srcname}
 Version:        0.6
-Release:        1%{?dist}
+Release:        3%{?dist}
 Summary:        %{summary}
 
 %global git_tag RELEASE_%(r=%{version}; echo $r | tr '.' '_')
@@ -23,6 +23,8 @@ Summary:        %{summary}
 License:        GPLv3
 URL:            https://github.com/jdennis/keycloak-httpd-client-install
 Source0:        https://github.com/jdennis/keycloak-httpd-client-install/archive/%{git_tag}.tar.gz#/%{srcname}-%{version}.tar.gz
+
+Patch1: validate_and_root_protected_locations.patch
 
 BuildArch:      noarch
 
@@ -76,7 +78,7 @@ of a Keycloak server.
 %endif
 
 %prep
-%autosetup -n %{srcname}-%{version}
+%autosetup -n %{srcname}-%{version} -p1
 
 %build
 %py2_build
@@ -122,6 +124,14 @@ install -c -m 644 doc/keycloak-httpd-client-install.8 %{buildroot}/%{_mandir}/ma
 %endif
 
 %changelog
+* Wed Jan 10 2018 John Dennis <jdennis@redhat.com> - 0.6-3
+- discovered a bug in the prior fix for rhbz#1481322, updated the patch
+- Resolves: rhbz#1481322,
+
+* Thu Nov  2 2017 John Dennis <jdennis@redhat.com> - 0.6-2
+- Resolves: rhbz#1481322,
+  mellon-root and mellon-protected-locations need to be validated
+
 * Fri Mar 17 2017 John Dennis <jdennis@redhat.com> - 0.6-1
 - Initial import for RHEL-7
   Resolves: rhbz#1401781

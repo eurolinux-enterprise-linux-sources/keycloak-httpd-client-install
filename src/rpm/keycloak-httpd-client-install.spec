@@ -5,16 +5,8 @@
 %global with_python3 1
 %endif
 
-%if 0%{?rhel} && 0%{?rhel} <= 7
-%{!?__python2:        %global __python2 /usr/bin/python2}
-%{!?python2_sitelib:  %global python2_sitelib %(%{__python2} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())")}
-%{!?python2_sitearch: %global python2_sitearch %(%{__python2} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib(1))")}
-%{!?py2_build:        %global py2_build %{__python2} setup.py build --executable="%{__python2} -s" %{?*}}
-%{!?py2_install:      %global py2_install %{__python2} setup.py install --skip-build --root %{buildroot} %{?*}}
-%endif
-
 Name:           %{srcname}
-Version:        0.8
+Version:        0.4
 Release:        1%{?dist}
 Summary:        %{summary}
 
@@ -76,7 +68,7 @@ of a Keycloak server.
 %endif
 
 %prep
-%autosetup -n %{srcname}-%{git_tag} -p1
+%autosetup -n %{srcname}-%{version}
 
 %build
 %py2_build
@@ -122,23 +114,20 @@ install -c -m 644 doc/keycloak-httpd-client-install.8 %{buildroot}/%{_mandir}/ma
 %endif
 
 %changelog
-* Mon Feb 11 2019 Jakub Hrozek <jhrozek@redhat.com> - 0.8-1
-- Resolves: rhbz#1673716 - Rebase k-h-c-i to version 0.8
-- The rebase also includes fixes for:
-  - rhbz#1533190 - CVE-2017-15111 keycloak-httpd-client-install: unsafe
-                   /tmp log file in --log-file option in keycloak_cli.py
-  - rhbz#1533202 - CVE-2017-15112 keycloak-httpd-client-install: unsafe
-                   use of -p/--admin-password on command line
+* Wed Jun  8 2016 John Dennis <jdennis@redhat.com> - 0.4-1
+- new upstream
+- add methods to add/remove client redirect URI
+- add function to parse SP metadata to extract AssertionConsumerServiceURL's
+- Add all AssertionConsumerServiceURL's as redirect URI's during
+  client registration.
 
-* Wed Jan 10 2018 John Dennis <jdennis@redhat.com> - 0.6-3
-- discovered a bug in the prior fix for rhbz#1481322, updated the patch
-- Resolves: rhbz#1481322,
+* Fri May 20 2016 John Dennis <jdennis@redhat.com> - 0.3-1
+- new upstream
+  See ChangeLog for details
 
-* Thu Nov  2 2017 John Dennis <jdennis@redhat.com> - 0.6-2
-- Resolves: rhbz#1481322,
-  mellon-root and mellon-protected-locations need to be validated
+* Tue May 17 2016 John Dennis <jdennis@redhat.com> - 0.2-1
+- new upstream
+- Add keycloak-httpd-client-install.8 man page
 
-* Fri Mar 17 2017 John Dennis <jdennis@redhat.com> - 0.6-1
-- Initial import for RHEL-7
-  Resolves: rhbz#1401781
- 
+* Fri May 13 2016 John Dennis <jdennis@redhat.com> - 0.1-1
+- Initial version

@@ -1,0 +1,41 @@
+2017-03-01  John Dennis  <jdennis@redhat.com> 0.6
+  * fix bug, if --mellon-root is not supplied and defaults to /
+    you end up with double slashes in entityId and endpoints
+  * add --tls-verify option to control python-requests behavor when
+    using tls to connect. With this option you can use a self-signed
+    cert or point to a CA bundle.
+  * Fix warnings and checks when using client originate method
+    'registration' with 'anonymous' authentication.
+2017-01-06  John Dennis  <jdennis@redhat.com> 0.5
+  * fix bug with default ports 80 and 443
+    default ports should not be present in URL
+  * add utility get_entity_id_from_metadata()
+  * add get_server_info() REST query
+2016-06-07  John Dennis  <jdennis@redhat.com> 0.4
+  * add methods to add/remove client redirect URI
+  * add function to parse SP metadata to extract
+    AssertionConsumerServiceURL's
+  * Add all AssertionConsumerServiceURL's as redirect URI's during
+    client registration.
+
+2016-05-17  John Dennis  <jdennis@redhat.com> 0.3
+  * add --mellon-https-port option
+  * add --mellon-root option
+  * add --mellon-endpoint option
+  * add --mellon-idp-attr-name option
+  * remove --mellon-endpoint-path option, instead compute from other options
+  * allow admin password to be piped into stdin or via
+    KEYCLOAK_ADMIN_PASSWORD environment varialble
+  * fix template-dir default
+  * remove doc/keycloak-httpd-client-install.md, use man page instead
+  * add port to mellon-http-url and entity id
+  * add support for creating a client group mapper
+  * keycloak-httpd-client-install now adds group mapper
+  * add MellonIdP attribute to mellon_httpd.conf
+  * Add keycloak-httpd-client-install.8 man page
+
+2016-05-17  John Dennis  <jdennis@redhat.com> 0.2
+  * Add keycloak-httpd-client-install.8 man page
+
+2016-05-13  John Dennis  <jdennis@redhat.com> 0.1
+  * Initial version
